@@ -4,6 +4,7 @@ try:
     import threading
     import soundfile as sf
     import sounddevice as sd
+    import playback_control
 except Exception as e:
     errors.error(f"Error {e}")
 
@@ -27,11 +28,12 @@ def test_single(device_id, filepath="testing_file/file.mp3", blocksize=1024):
 
     try:
         with global_lock:
-            stream = sd.OutputStream(samplerate=int(fs), device=device_id, channels=channels, dtype='float32', blocksize=int(blocksize))
+            stream = sd.OutputStream(samplerate=int(fs), device=device_id, channels=channels, dtype='float32',
+                                     blocksize=int(blocksize))
             stream.start()
+        playback_control.register(stream)
 
         try:
-            total_samples = len(data)
             for i in range(0, len(data), blocksize):
                 chunk = data[i:i + blocksize]
                 chunk_len = len(chunk)
@@ -41,8 +43,14 @@ def test_single(device_id, filepath="testing_file/file.mp3", blocksize=1024):
                     padding = np.zeros((pad_len, channels), dtype=np.float32)
                     chunk = np.vstack((chunk, padding))
 
-                stream.write(np.ascontiguousarray(chunk))
+                try:
+                    stream.write(np.ascontiguousarray(chunk))
+                except sd.PortAudioError:
+                    if stream.stopped:  # aborted by the Stop button
+                        break
+                    raise
         finally:
+            playback_control.unregister(stream)
             with global_lock:
                 stream.stop()
                 stream.close()

@@ -1,0 +1,57 @@
+<DeviceRow>:
+    size_hint_y: None
+    height: max(dp(40), lbl.texture_size[1] + dp(10))
+    spacing: dp(5)
+    CheckBox:
+        id: cb
+        size_hint_x: None
+        width: dp(40)
+    Label:
+        id: lbl
+        text: root.text
+        text_size: self.width, None
+        halign: "left"
+        valign: "middle"
+
+<MainView>:
+    orientation: "vertical"
+    padding: dp(10)
+    spacing: dp(10)
+
+    Label:
+        text: root.quote
+        size_hint_y: None
+        height: dp(40)
+
+    ScrollView:
+        do_scroll_x: False
+        bar_width: dp(8)
+        BoxLayout:
+            id: device_list
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: dp(5)
+
+    Button:
+        text: "Test selected"
+        size_hint_y: None
+        height: dp(48)
+        on_release: app.test_selected()
+
+    Button:
+        text: "Play file on selected"
+        size_hint_y: None
+        height: dp(48)
+        on_release: app.play_selected()
+
+    Button:
+        text: "Select file"
+        size_hint_y: None
+        height: dp(48)
+        on_release: app.select_file()
+    Button:
+        text: "Stop"
+        size_hint_y: None
+        height: dp(48)
+        on_release: app.stop_playing()
