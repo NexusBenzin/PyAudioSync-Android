@@ -12,7 +12,6 @@
 - **Audio routing matrix** — Flexible routing of outputs
 - **Real-time DSP** — Low-latency audio processing powered by `numpy` and `scipy`
 - **Device management** — Detect, configure, and manage all connected audio devices
-- **Cross-platform** — Windows, Linux, and macOS support planned
 
 ---
 
