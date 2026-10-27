@@ -22,7 +22,7 @@
 | Audio I/O | `sounddevice` |
 | DSP / EQ | `numpy` |
 | Low-latency sync | `JACK` (Linux), `ASIO` (Windows) |
-| GUI | `CustomTkinter` |
+| GUI | `Kivy` |
 
 ---
 
