@@ -1,4 +1,4 @@
-# 🎵 PyAudioSync for Android
+# 🎵 PyAudioSync
 
 > A Python application for syncing audio playback across multiple devices with real-time equalization and advanced routing configuration.
 
